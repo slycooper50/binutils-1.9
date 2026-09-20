@@ -37,6 +37,7 @@ CFLAGS = -g $(XCFLAGS) -m32 -std=gnu89 -Wa,--32 -fpermissive \
 	 -Wno-builtin-declaration-mismatch -fno-builtin 
 	 #-isystem /usr/lib/gcc/x86_64-pc-linux-gnu/16/plugin/include
 
+CFLAGS = -O2 -m32 -std=gnu89 -fpermissive -fno-builtin -include errno.h -Wno-implicit-function-declaration -Wno-int-conversion -Wno-return-type
 # Don't add robotussin; it won't compile on BSD or GNU systems.
 # objdump is not here because it (at least used to) not compile
 # on most systems (trouble with N_DATADDR).  Some of those problems
@@ -119,7 +120,7 @@ $(archpfx)ar: $(archpfx)ar.o $(LIBS)
 
 $(archpfx)gprof: $(archpfx)gprof.o $(GNU_GETOPT_LONG) $(CPLUS_DEM) $(LIBS)
 	$(GNUCC) $(CFLAGS) -o $(archpfx)gprof $(archpfx)gprof.o \
-		$(GNU_GETOPT_LONG) $(CPLUS_DEM) $(LIBS)
+		$(GNU_GETOPT_LONG) $(CPLUS_DEM) $(LIBS) -lbsd
 $(archpfx)gprof.o: gprof.c gmon.h
 	$(GNUCC) $(CFLAGS) -c gprof.c $(OUTPUT_OPTION)
 

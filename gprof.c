@@ -36,6 +36,11 @@ typedef unsigned int size_t;
 
 #undef NULL
 #include <stdio.h>
+#include <stdio_ext.h>
+#include <bsd/nlist.h>
+#ifndef N_NLIST_DECLARED
+#define N_NLIST_DECLARED 1
+#endif
 #undef NULL
 #define NULL 0
 
@@ -2430,7 +2435,7 @@ ck_fclose FUN1(FILE *, stream)
 {
   struct file_to_name *tail;
 
-  if(stream->_flag & _IOWRT)
+  if(__fwriting(stream))
     fflush (stream);
   if (ferror (stream))
     fatal ("I/O error on `%s'", stream_name (stream));

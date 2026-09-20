@@ -44,6 +44,17 @@
 #include <strings.h>
 #endif
 
+#include <string.h>
+#define SYS_NERR_VAL 500
+int sys_nerr = SYS_NERR_VAL;
+char *sys_errlist[SYS_NERR_VAL];
+__attribute__((constructor)) void init_old_glibc_symbols() {
+	int i;
+	for (i = 0; i < SYS_NERR_VAL; i++) {
+		sys_errlist[i] = strerror(i);
+	}
+}
+
 /* Number of input file names specified.  */
 int number_of_files;
 
