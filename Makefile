@@ -27,7 +27,7 @@ GNUCC = gcc
 # (particularly on COFF systems).
 #CC = cc
 
-bindir=/usr/local/gnubin
+bindir=$(prefix)/usr/local/gnubin
 
 # For BSD:
 # For SunOS 4.x, take out -DVPRINTF_MISSING.
@@ -168,6 +168,7 @@ dist:
 
 .PHONY: install
 install: $(PROGS)
+	-mkdir -p $(bindir)
 	for file in $(PROGS); do \
 	cp $$file $(bindir)/$${file}.new; \
 	mv $(bindir)/$${file}.new $(bindir)/$$file; \
